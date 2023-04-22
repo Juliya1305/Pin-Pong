@@ -20,22 +20,19 @@ class Player(GameSprite):
     def update_l(self):
         key_pressed = key.get_pressed()
         
-        if key_pressed[K_W] and self.rect.y > 0:
+        if key_pressed[K_w] and self.rect.y > 0:
             self.rect.y -= self.speed
 
-        if key_pressed[K_S] and self.rect.y < 500:
+        if key_pressed[K_s] and self.rect.y < 500:
             self.rect.y += self.speed
 
-    def fire(self):
-        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 15, 20)
-        bullets.add(bullet)
-        fire.play()
+    
         
 window = display.set_mode((700, 500))
 display.set_caption('Пин-Понг')
 
 #задай фон сцены
-background = transform.scale(image.load('galaxy.jpg'), (700,500))
+#background = transform.scale(image.load('galaxy.jpg'), (700,500))
 
 font.init()
 font1 = font.Font(None, 30)
@@ -53,7 +50,7 @@ mixer.init()
 #fire = mixer.Sound('fire.ogg')
 clock = time.Clock()
 
-player = Player('rocket.png', 325, 410, 10, 90, 90)
+player = Player('left.png', 0, 250, 10, 90, 90)
 
 run = True
 finish = False
@@ -74,17 +71,12 @@ while run:
             
 
     if finish != True: 
-        window.blit(background,(0, 0))
+       # window.blit(background,(0, 0))
 
         player.reset()
-        monsters.draw(window)
-        bullets.draw(window)
-        asteroids.draw(window)
 
-        player.update()
-        monsters.update()
-        bullets.update()
-        asteroids.update()
+        player.update_l()
+        
 
         if  count >= 5:
             window.blit(win, (245, 250))
@@ -94,11 +86,11 @@ while run:
         counts = font1.render('Счет:' + str(count), True, (255, 255, 255))
 
 
-        sprites_list = sprite.spritecollide(player, monsters, False)
-        asteroid_list = sprite.spritecollide(player, asteroids, False)
+        #sprites_list = sprite.spritecollide(player, monsters, False)
+        #asteroid_list = sprite.spritecollide(player, asteroids, False)
 
-        sprites_list2  = sprites_list
-        asteroid_list2  = asteroid_list
+        #sprites_list2  = sprites_list
+        #asteroid_list2  = asteroid_list
 
         
         window.blit(counts,(0, 30))
